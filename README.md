@@ -4,6 +4,6 @@ This program will let you manage the list of students at the hypothetical Villai
 
 ## How to use
 
-'''shell
+```shell
 ruby directory.rb
-'''
+```
