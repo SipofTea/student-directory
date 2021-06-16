@@ -1,26 +1,31 @@
-students_array = [
-  {name: "Dr. Hannibal Lecter", cohort: :april, colour: "bloodred"},
-  {name: "Darth Vader", cohort: :november, colour: "black"},
-  {name: "Nurse Ratched", cohort: :april, colour: "white"},
-  {name: "Michael Corleone", cohort: :november, colour: "gray"},
-  {name: "Alex DeLarge", cohort: :november, colour: "white"},
-  {name: "The Wicked Witch of the West", cohort: :november, colour: "green" },
-  {name: "Terminator", cohort: :november, colour: "black"},
-  {name: "Freddy Krueger", cohort: :november, colour: "red"},
-  {name: "The Joker", cohort: :november, colour: "purple"},
-  {name: "Joffrey Baratheon", cohort: :november, colour: "gold"},
-  {name: "Norman Bates", cohort: :november, colour: "blue"},  
-  ]
+# students_array = [
+#   {name: "Dr. Hannibal Lecter", cohort: :april, colour: "bloodred"},
+#   {name: "Darth Vader", cohort: :november, colour: "black"},
+#   {name: "Nurse Ratched", cohort: :april, colour: "white"},
+#   {name: "Michael Corleone", cohort: :november, colour: "gray"},
+#   {name: "Alex DeLarge", cohort: :november, colour: "white"},
+#   {name: "The Wicked Witch of the West", cohort: :november, colour: "green" },
+#   {name: "Terminator", cohort: :november, colour: "black"},
+#   {name: "Freddy Krueger", cohort: :november, colour: "red"},
+#   {name: "The Joker", cohort: :november, colour: "purple"},
+#   {name: "Joffrey Baratheon", cohort: :november, colour: "gold"},
+#   {name: "Norman Bates", cohort: :november, colour: "blue"},  
+#   ]
   
 students = []
 # user input to create student body
 def input_students(students)
+  puts "To finish, just hit return twice"
+  was_last_name_empty = false
   while true do
     puts "Please enter the name of the student"
-    puts "To finish, just hit return twice"
     name = gets.delete("\n").capitalize
     if name.empty?
-      break
+      if was_last_name_empty == true
+        break
+      else
+      was_last_name_empty = true
+      end
     else
       puts "Please enter the student cohort"
       cohort = gets.chomp.to_sym
@@ -28,6 +33,7 @@ def input_students(students)
         cohort = :none
       end
       students << {name: name, cohort: cohort}
+      was_last_name_empty = false
     end
   end
   return students
@@ -86,16 +92,20 @@ def print_by_cohort(students)
     puts cohort.capitalize
     puts "----------------"
     puts names
-    puts "----------------"
+    puts "/"
   end
   
 end
 
 def print_all_students(students)
   n = 0
-  while n < students.count() do
-  puts "#{n + 1}. #{students[n][:name]} (#{students[n][:cohort]} cohort)".center(50)
-  n += 1
+  if students.count < 1
+    puts "There are no students"
+  else
+    while n < students.count() do
+    puts "#{n + 1}. #{students[n][:name]} (#{students[n][:cohort]} cohort)".center(50)
+    n += 1
+    end
   end
 end
 
@@ -107,16 +117,14 @@ def print_footer(students)
   end
 end
 
-# this is helpful for switching to user input
-# current_students = input_students(students)
 
- input_students(students)
-# print_header
-# print_specific_inital(current_students)
-# print_short_names(current_students)
-# print_students_colour(current_students)
-# print_all_students(current_students)
-# fix_typo(current_students)
-# print_all_students(current_students)
-# print_footer(current_students)
-#print_by_cohort(students_array)
+input_students(students)
+print_header
+print_specific_inital(students)
+print_short_names(students)
+print_students_colour(students)
+print_all_students(students)
+fix_typo(students)
+print_by_cohort(students)
+print_all_students(students)
+print_footer(students)
