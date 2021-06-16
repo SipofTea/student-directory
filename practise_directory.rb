@@ -1,16 +1,16 @@
-# students_array = [
-#   {name: "Dr. Hannibal Lecter", cohort: :november, colour: "bloodred"},
-#   {name: "Darth Vader", cohort: :november, colour: "black"},
-#   {name: "Nurse Ratched", cohort: :november, colour: "white"},
-#   {name: "Michael Corleone", cohort: :november, colour: "gray"},
-#   {name: "Alex DeLarge", cohort: :november, colour: "white"},
-#   {name: "The Wicked Witch of the West", cohort: :november, colour: "green" },
-#   {name: "Terminator", cohort: :november, colour: "black"},
-#   {name: "Freddy Krueger", cohort: :november, colour: "red"},
-#   {name: "The Joker", cohort: :november, colour: "purple"},
-#   {name: "Joffrey Baratheon", cohort: :november, colour: "gold"},
-#   {name: "Norman Bates", cohort: :november, colour: "blue"},  
-#   ]
+students_array = [
+  {name: "Dr. Hannibal Lecter", cohort: :april, colour: "bloodred"},
+  {name: "Darth Vader", cohort: :november, colour: "black"},
+  {name: "Nurse Ratched", cohort: :april, colour: "white"},
+  {name: "Michael Corleone", cohort: :november, colour: "gray"},
+  {name: "Alex DeLarge", cohort: :november, colour: "white"},
+  {name: "The Wicked Witch of the West", cohort: :november, colour: "green" },
+  {name: "Terminator", cohort: :november, colour: "black"},
+  {name: "Freddy Krueger", cohort: :november, colour: "red"},
+  {name: "The Joker", cohort: :november, colour: "purple"},
+  {name: "Joffrey Baratheon", cohort: :november, colour: "gold"},
+  {name: "Norman Bates", cohort: :november, colour: "blue"},  
+  ]
   
 students = []
 # user input to create student body
@@ -44,7 +44,6 @@ def fix_typo(students)
   students[index] = {name: name, cohort: cohort}
 end
 
-
 def print_header
   puts "The students of Villains Academy"
   puts "--------------------------------"
@@ -74,7 +73,21 @@ def print_students_colour(students)
   end
 end
 
-def print_by_cohort(student_body)
+def print_by_cohort(students)
+  sorted_by_cohort = {}
+  students.each { |student|
+    cohort = student[:cohort]
+    if sorted_by_cohort[cohort] == nil
+      sorted_by_cohort[cohort] = []
+    end
+    sorted_by_cohort[cohort].push(student[:name])
+  }
+  sorted_by_cohort.each do |cohort, names|
+    puts cohort.capitalize
+    puts "----------------"
+    puts names
+    puts "----------------"
+  end
   
 end
 
@@ -95,16 +108,17 @@ def print_footer(students)
 end
 
 # this is helpful for switching to user input
-current_students = input_students(students)
+# current_students = input_students(students)
 
-input_students(students)
-print_header
-# print_specific_inital(current_students)
-# print_short_names(current_students)
-# print_students_colour(current_students)
-print_all_students(current_students)
-fix_typo(current_students)
-print_all_students(current_students)
-# print_footer(current_students)
+# input_students(students)
+# print_header
+# # print_specific_inital(current_students)
+# # print_short_names(current_students)
+# # print_students_colour(current_students)
+# print_all_students(current_students)
+# fix_typo(current_students)
+# print_all_students(current_students)
+# # print_footer(current_students)
 
  
+print_by_cohort(students_array)
