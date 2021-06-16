@@ -18,7 +18,7 @@ def input_students(students)
   while true do
     puts "Please enter the name of the student"
     puts "To finish, just hit return twice"
-    name = gets.chomp.capitalize
+    name = gets.delete("\n").capitalize
     if name.empty?
       break
     else
@@ -110,15 +110,13 @@ end
 # this is helpful for switching to user input
 # current_students = input_students(students)
 
-# input_students(students)
+ input_students(students)
 # print_header
-# # print_specific_inital(current_students)
-# # print_short_names(current_students)
-# # print_students_colour(current_students)
+# print_specific_inital(current_students)
+# print_short_names(current_students)
+# print_students_colour(current_students)
 # print_all_students(current_students)
 # fix_typo(current_students)
 # print_all_students(current_students)
-# # print_footer(current_students)
-
- 
-print_by_cohort(students_array)
+# print_footer(current_students)
+#print_by_cohort(students_array)
