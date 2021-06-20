@@ -18,12 +18,17 @@ end
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
+  input_student_loop
+end
+
+def input_student_loop
   name = STDIN.gets.chomp
-  while !name.empty? do
-    add_student(name, :november)
-    puts "Now we have #{@students.count} students"
-    name = STDIN.gets.chomp
+  if name.empty?
+    return
   end
+  add_student(name, :november)
+  puts "Now we have #{@students.count} students"
+  input_student_loop
 end
 
 def add_student(name, cohort)
