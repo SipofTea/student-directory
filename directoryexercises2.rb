@@ -64,24 +64,24 @@ end
 
 def save_students
   filename = ask_for_file
-  file = File.open(filename, "w")
+  File.open(filename, "w") { |file|
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_entry = student_data.join(",")
     file.puts csv_entry
   end
-  file.close
+  }
   puts "#{@students.count} students have been saved to #{filename}"
 end
 
 def load_students(filename)
-  file = File.open(filename, "r")
+  File.open(filename, "r") { |file|
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
     add_student(name, cohort)
   end
   puts "Loaded #{@students.count} students from #{filename}" 
-  file.close
+  } 
 end
 
 def load_students_startup
