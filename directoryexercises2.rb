@@ -19,6 +19,7 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   input_student_loop
+  puts "Now we have #{@students.count} students"
 end
 
 def input_student_loop
@@ -27,7 +28,7 @@ def input_student_loop
     return
   end
   add_student(name, :november)
-  puts "Now we have #{@students.count} students"
+  puts "Student #{name} was added"
   input_student_loop
 end
 
@@ -36,10 +37,11 @@ def add_student(name, cohort)
 end
 
 def print_menu
+  puts "Please enter a number"
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list of students to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list of students to an existing file"
+  puts "4. Load the list from an existing file"
   puts "9. Exit"
 end
 
@@ -49,14 +51,27 @@ def show_students
   print_footer
 end
 
+def ask_for_file
+  puts "Please enter a filename"
+  filename = gets.chomp
+  if File.exist?(filename)
+    return filename
+  else
+    puts "This file could not be found"
+    ask_for_file
+  end
+end
+
 def save_students
-  file = File.open("students.csv", "w")
+  filename = ask_for_file
+  file = File.open(filename, "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_entry = student_data.join(",")
     file.puts csv_entry
   end
   file.close
+  puts "#{@students.count} students have been saved to #{filename}"
 end
 
 def load_students(filename)
@@ -65,11 +80,11 @@ def load_students(filename)
     name, cohort = line.chomp.split(",")
     add_student(name, cohort)
   end
-  puts "Loaded #{@students.count} from #{filename}" 
+  puts "Loaded #{@students.count} students from #{filename}" 
   file.close
 end
 
-def try_load_students
+def load_students_startup
   filename = ARGV.first
   if filename.nil?
     load_students("students.csv")
@@ -81,6 +96,11 @@ def try_load_students
   end
 end
 
+def load_while_running
+  filename = ask_for_file
+  load_students(filename)
+end
+
 def excecute_choice_process(selection)
   case selection
     when "1"
@@ -90,7 +110,7 @@ def excecute_choice_process(selection)
     when "3"
       save_students
     when "4"
-      load_students
+      load_while_running
     when "9"
       exit
     else
@@ -105,5 +125,5 @@ def interactive_menu
   end  
 end
 
-try_load_students
+load_students_startup
 interactive_menu
