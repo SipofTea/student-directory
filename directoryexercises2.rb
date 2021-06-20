@@ -66,25 +66,15 @@ end
 
 def save_students
   filename = ask_for_file
-  File.open(filename, "w") { |file|
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_entry = student_data.join(",")
-    file.puts csv_entry
+  CSV.open(filename, "w") do |file|
+    @students.each do |student|
+      file << [student[:name], student[:cohort]]
+    end
   end
-  }
   puts "#{@students.count} students have been saved to #{filename}"
 end
 
 def load_students(filename)
-  # File.open(filename, "r") { |file|
-  # file.readlines.each do |line|
-  #   name, cohort = line.chomp.split(",")
-  #   add_student(name, cohort)
-  # end
-  # puts "Loaded #{@students.count} students from #{filename}" 
-  # } 
-  
   CSV.foreach(filename) do |row|
     name, cohort = row[0], row[1]
     add_student(name, cohort)
