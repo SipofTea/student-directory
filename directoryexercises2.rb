@@ -1,3 +1,5 @@
+require 'csv'
+
 @students = []
 
 def print_header
@@ -75,13 +77,19 @@ def save_students
 end
 
 def load_students(filename)
-  File.open(filename, "r") { |file|
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
+  # File.open(filename, "r") { |file|
+  # file.readlines.each do |line|
+  #   name, cohort = line.chomp.split(",")
+  #   add_student(name, cohort)
+  # end
+  # puts "Loaded #{@students.count} students from #{filename}" 
+  # } 
+  
+  CSV.foreach(filename) do |row|
+    name, cohort = row[0], row[1]
     add_student(name, cohort)
   end
-  puts "Loaded #{@students.count} students from #{filename}" 
-  } 
+  puts "Loaded #{@students.count} students from #{filename}"
 end
 
 def load_students_startup
@@ -127,3 +135,5 @@ end
 
 load_students_startup
 interactive_menu
+
+
