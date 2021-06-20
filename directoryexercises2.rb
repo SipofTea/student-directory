@@ -20,10 +20,14 @@ def input_students
   puts "To finish, just hit return twice"
   name = STDIN.gets.chomp
   while !name.empty? do
-    @students << {name: name, cohort: :november}
+    add_student(name, :november)
     puts "Now we have #{@students.count} students"
     name = STDIN.gets.chomp
   end
+end
+
+def add_student(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}  
 end
 
 def print_menu
@@ -54,7 +58,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
-    @students << {name: name, cohort: cohort.to_sym}
+    add_student(name, cohort)
   end
   file.close
 end
@@ -74,7 +78,7 @@ end
 def excecute_choice_process(selection)
   case selection
     when "1"
-      students = input_students
+      input_students
     when "2"
       show_students
     when "3"
