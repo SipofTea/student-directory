@@ -85,7 +85,17 @@ end
 def load_students_startup
   filename = ARGV.first
   if filename.nil?
-    load_students("students.csv")
+    if File.exist?("students.csv")
+      load_students("students.csv")
+    else
+      puts "Create file to save student list (students.csv)? (Y/N)"
+      user_input = gets.chomp.capitalize
+      if user_input == "Y"
+      create_file("students.csv")
+      elsif user_input == "N"
+        puts "This program requires a save file to save the student list permanently."
+      end
+    end
   elsif File.exist?(filename)
     load_students(filename)
   else
@@ -97,6 +107,10 @@ end
 def load_while_running
   filename = ask_for_file
   load_students(filename)
+end
+
+def create_file(filename)
+  File.new(filename, "w+")
 end
 
 def excecute_choice_process(selection)
@@ -125,5 +139,3 @@ end
 
 load_students_startup
 interactive_menu
-
-
