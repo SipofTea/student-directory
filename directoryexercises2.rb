@@ -60,6 +60,7 @@ def ask_for_file
     return filename
   else
     puts "This file could not be found"
+    create_file
     ask_for_file
   end
 end
@@ -88,13 +89,7 @@ def load_students_startup
     if File.exist?("students.csv")
       load_students("students.csv")
     else
-      puts "Create file to save student list (students.csv)? (Y/N)"
-      user_input = gets.chomp.capitalize
-      if user_input == "Y"
-      create_file("students.csv")
-      elsif user_input == "N"
-        puts "This program requires a save file to save the student list permanently."
-      end
+      create_file
     end
   elsif File.exist?(filename)
     load_students(filename)
@@ -109,8 +104,14 @@ def load_while_running
   load_students(filename)
 end
 
-def create_file(filename)
-  File.new(filename, "w+")
+def create_file
+  puts "Create file to save student list (students.csv)? (Y/N)"
+    user_input = gets.chomp.capitalize
+    if user_input == "Y"
+      File.new("students.csv", "w+")
+    elsif user_input == "N"
+      puts "This program requires a save file to save the student list permanently."
+    end
 end
 
 def excecute_choice_process(selection)
